@@ -24,12 +24,12 @@ To make a get request:
 ```javascript
 qreq
   .get("http://google.com")
-  .then(function(res, body){
-    console.log(body);
-    #...
+  .then(function(res){
+    console.log(res.body);
+    //...
   })
-  .fail(function(err, res, body){
+  .fail(function(err){
     console.log(err);
-    #...
+    //...
   });
 ```
