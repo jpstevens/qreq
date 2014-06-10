@@ -8,13 +8,13 @@ describe "qreq", ->
 
   describe "get", ->
 
-    success = { method: "GET", url: "#{host}/test" }
+    success = { url: "#{host}/test" }
     expectedResponse = JSON.stringify { message: "GET complete." }
 
     beforeEach -> server.start(port)
     afterEach -> server.stop()
 
-    describe "\b(url)", ->
+    describe "(url)", ->
 
       describe "success", ->
 
@@ -35,7 +35,7 @@ describe "qreq", ->
             expect(err).to.not.equal null
             done()
 
-    describe "\b(config)", ->
+    describe "(config)", ->
 
       describe "success", ->
 

@@ -8,13 +8,13 @@ describe "qreq", ->
 
   describe "post", ->
 
-    success = { method: "POST", url: "#{host}/test", json: { message: "Sending POST..." }}
+    success = { url: "#{host}/test", json: { message: "Sending POST..." }}
     expectedResponse = { message: "POST complete.", req: success.json }
 
     beforeEach -> server.start(port)
     afterEach -> server.stop()
 
-    describe "\b(url, data)", ->
+    describe "(url, data)", ->
 
       describe "success", ->
 
@@ -23,8 +23,6 @@ describe "qreq", ->
           .post success.url, success.json
           .then (res) ->
             expect(res.body).to.not.equal null
-            console.log res.body
-            console.log expectedResponse
             expect(JSON.stringify(expectedResponse)).to.equal JSON.stringify(res.body)
             done()
 
@@ -37,7 +35,7 @@ describe "qreq", ->
             expect(err).to.not.equal null
             done()
 
-    describe "\b(config)", ->
+    describe "(config)", ->
 
       describe "success", ->
 
@@ -47,6 +45,14 @@ describe "qreq", ->
           .then (res) ->
             expect(res.body).to.not.equal null
             expect(JSON.stringify(expectedResponse)).to.equal JSON.stringify(res.body)
+            done()
+
+        it "ignores config.method = 'GET'", (done) ->
+          success.method = "GET"
+          qreq
+          .post success
+          .then (res) ->
+            expect(res.body.message).to.not.contain "GET"
             done()
 
       describe "error", ->
@@ -63,3 +69,4 @@ describe "qreq", ->
 
       it "throws an error", ->
         expect(-> qreq.post()).to.throw Error
+

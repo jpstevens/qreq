@@ -20,6 +20,7 @@ class Qreq
     switch typeof urlOrConfig
       when "object"
         config = urlOrConfig
+        config.method = method.toUpperCase()
       when "string"
         config = { method: method.toUpperCase(), url: urlOrConfig }
       else

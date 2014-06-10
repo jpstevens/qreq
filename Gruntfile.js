@@ -24,7 +24,7 @@ module.exports = function(grunt) {
     mochaTest: {
       feature: {
         options: {
-          reporter: 'spec',
+          reporter: 'list',
           require: 'coffee-script/register',
           colors: true
         },

@@ -8,13 +8,13 @@ describe "qreq", ->
 
   describe "delete", ->
 
-    success = { method: "DELETE", url: "#{host}/test" }
+    success = { url: "#{host}/test" }
     expectedResponse = JSON.stringify { message: "DELETE complete." }
 
     beforeEach -> server.start(port)
     afterEach -> server.stop()
 
-    describe "\b(url)", ->
+    describe "(url)", ->
 
       describe "success", ->
 
@@ -35,7 +35,7 @@ describe "qreq", ->
             expect(err).to.not.equal null
             done()
 
-    describe "\b(config)", ->
+    describe "(config)", ->
 
       describe "success", ->
 
@@ -45,6 +45,14 @@ describe "qreq", ->
           .then (res) ->
             expect(res.body).to.equal expectedResponse
             expect(res.body).to.not.equal null
+            done()
+
+        it "ignores config.method = 'GET'", (done) ->
+          success.method = "GET"
+          qreq
+          .delete success
+          .then (res) ->
+            expect(res.body.message).to.not.contain "GET"
             done()
 
       describe "error", ->
