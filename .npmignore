@@ -1,5 +1,2 @@
-tests
-src
-.gitignore
-Gruntfile.js
-.travis.yml
+node_modules
+npm-debug.log
