@@ -1,7 +1,6 @@
 express = require "express"
 bodyParser = require "body-parser"
 server  = null
-require "colors"
 
 exports.start = (port) ->
   
