@@ -1,0 +1,41 @@
+{
+  "name": "q-request",
+  "version": "0.0.2",
+  "description": "A q-style promise wrapper for HTTP requests",
+  "main": "dist/q-request.js",
+  "dependencies": {
+    "q": "~1.0.1",
+    "request": "~2.34.0"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-coffee": "^0.10.1",
+    "grunt-coffeelint": "0.0.10",
+    "grunt-contrib-clean": "^0.5.0",
+    "express": "^4.3.2",
+    "grunt-mocha-test": "^0.11.0",
+    "coffee-script": "^1.7.1",
+    "http-status": "^0.1.7",
+    "body-parser": "^1.3.0",
+    "chai": "^1.9.1"
+  },
+  "scripts": {
+    "test": "grunt test",
+    "prepublish": "grunt test && grunt build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jpstevens/q-request.git"
+  },
+  "keywords": [
+    "jquery",
+    "dom",
+    "domino"
+  ],
+  "author": "Jack Stevens",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jpstevens/q-request/issues"
+  },
+  "homepage": "https://github.com/jpstevens/q-request"
+}
