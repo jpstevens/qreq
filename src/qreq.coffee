@@ -10,35 +10,33 @@ class Qreq
     # make request
     request config, (err, res) ->
       if err
-        deferred.reject err, res
-      else if (res.statusCode < 200) or (res.statusCode >= 300)
-        err = new Error "#{res.statusCode} #{HTTPStatus[res.statusCode]}"
-        deferred.reject err, res
+        deferred.reject err
       else
         deferred.resolve res
     # return promise
     deferred.promise
 
-  @get: (url) ->
-    standardRequest
-      method: "GET"
-      url: url
+  parseConfigParams = (method, urlOrConfig, data) ->
+    switch typeof urlOrConfig
+      when "object"
+        config = urlOrConfig
+      when "string"
+        config = { method: method.toUpperCase(), url: urlOrConfig }
+      else
+        throw new Error "Method '#{method.toLowerCase()}' requires either a 'url' value or 'config' object."
+    config.json = data if data
+    config
 
-  @post: (url, data) ->
-    standardRequest
-      method: "POST"
-      url: url
-      form: data
+  @get: (urlOrConfig) ->
+    standardRequest parseConfigParams("get", urlOrConfig)
 
-  @delete: (url) ->
-    standardRequest
-      method: "DELETE"
-      url: url
+  @post: (urlOrConfig, data) ->
+    standardRequest parseConfigParams("post", urlOrConfig, data)
 
-  @put: (url, data) ->
-    standardRequest
-      method: "PUT"
-      url: url
-      form: data
+  @delete: (urlOrConfig) ->
+    standardRequest parseConfigParams("delete", urlOrConfig)
+
+  @put: (urlOrConfig, data) ->
+    standardRequest parseConfigParams("put", urlOrConfig, data)
 
 module.exports = Qreq
