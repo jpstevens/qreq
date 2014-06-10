@@ -1,5 +1,5 @@
-# q-request
-[![Build Status](https://secure.travis-ci.org/jpstevens/cmd-exec.png?branch=master)](https://travis-ci.org/jpstevens/cmd-exec)
+# qreq
+[![Build Status](https://secure.travis-ci.org/jpstevens/qreq.png?branch=master)](https://travis-ci.org/jpstevens/qreq)
 
 A q-style promise wrapper for HTTP requests
 
@@ -8,7 +8,7 @@ A q-style promise wrapper for HTTP requests
 To install, go to your console/terminal and run:
 
 ```bash
-npm install q-request
+npm install qreq
 ```
 
 ## Usage:
@@ -16,7 +16,7 @@ npm install q-request
 In your project, require the package:
 
 ```javascript
-var qreq = require("q-request");
+var qreq = require("qreq");
 ```
 
 To make a get request:

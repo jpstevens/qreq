@@ -1,8 +1,8 @@
 {
-  "name": "q-request",
-  "version": "0.0.2",
+  "name": "qreq",
+  "version": "0.0.1",
   "description": "A q-style promise wrapper for HTTP requests",
-  "main": "dist/q-request.js",
+  "main": "dist/qreq.js",
   "dependencies": {
     "q": "~1.0.1",
     "request": "~2.34.0"
@@ -25,7 +25,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jpstevens/q-request.git"
+    "url": "https://github.com/jpstevens/qreq.git"
   },
   "keywords": [
     "jquery",
@@ -35,7 +35,7 @@
   "author": "Jack Stevens",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jpstevens/q-request/issues"
+    "url": "https://github.com/jpstevens/qreq/issues"
   },
-  "homepage": "https://github.com/jpstevens/q-request"
+  "homepage": "https://github.com/jpstevens/qreq"
 }
