@@ -1,11 +1,12 @@
 {
   "name": "qreq",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A q-style promise wrapper for HTTP requests",
   "main": "dist/qreq.js",
   "dependencies": {
     "q": "~1.0.1",
-    "request": "~2.34.0"
+    "request": "~2.34.0",
+    "http-status": "^0.1.7"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
@@ -28,7 +29,9 @@
     "url": "https://github.com/jpstevens/qreq.git"
   },
   "keywords": [
-    "q", "request", "promise"
+    "q",
+    "request",
+    "promise"
   ],
   "author": "Jack Stevens",
   "license": "ISC",
