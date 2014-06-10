@@ -1,5 +1,5 @@
 expect   = require("chai").expect
-QRequest = require "../../src/q-request"
+QRequest = require "../../src/qreq"
 server   = require "../fixtures/server"
 port = 9090
 host = "http://localhost:#{port}"

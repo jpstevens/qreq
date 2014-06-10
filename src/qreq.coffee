@@ -1,9 +1,8 @@
 HTTPStatus = require "http-status"
 request = require "request"
 Q = require "q"
-require "colors"
 
-class QRequest
+class Qreq
 
   standardRequest = (config) ->
     # init defer object
@@ -42,4 +41,4 @@ class QRequest
       url: url
       form: data
 
-module.exports = QRequest
+module.exports = Qreq
