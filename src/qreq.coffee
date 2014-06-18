@@ -1,43 +1,21 @@
-HTTPStatus = require "http-status"
 request = require "request"
 Q = require "q"
 
+RequestAdapter = require "./request-adapter"
+ArgParser = require "./arg-parser"
+
 class Qreq
 
-  standardRequest = (config) ->
-    # init defer object
-    deferred = Q.defer()
-    # make request
-    request config, (err, res) ->
-      if err
-        deferred.reject err
-      else
-        deferred.resolve res
-    # return promise
-    deferred.promise
+  request = (method, args) ->
+    opts = ArgParser.parse(method, args)
+    RequestAdapter.makeRequest opts.config, opts.callback
 
-  parseConfigParams = (method, urlOrConfig, data) ->
-    switch typeof urlOrConfig
-      when "object"
-        config = urlOrConfig
-        config.method = method.toUpperCase()
-      when "string"
-        config = { method: method.toUpperCase(), url: urlOrConfig }
-      else
-        throw new Error "Method '#{method.toLowerCase()}' requires either a 'url' value or 'config' object."
-    config.json = data if data
-    config
+  @get: (args...) -> request "get", args
 
-  @get: (urlOrConfig) ->
-    standardRequest parseConfigParams("get", urlOrConfig)
+  @post: (args...) -> request "post", args
 
-  @post: (urlOrConfig, data) ->
-    standardRequest parseConfigParams("post", urlOrConfig, data)
+  @delete: (args...) -> request "delete", args
 
-  @delete: (urlOrConfig) ->
-    standardRequest parseConfigParams("delete", urlOrConfig)
-
-  @put: (urlOrConfig, data) ->
-    standardRequest parseConfigParams("put", urlOrConfig, data)
+  @put: (args...) -> request "put", args
 
 module.exports = Qreq

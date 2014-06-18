@@ -1,71 +1,92 @@
-expect   = require("chai").expect
+expect = require("chai").expect
 qreq = require "../../src/qreq"
-server   = require "../fixtures/server"
+# test server config
 port = 9090
 host = "http://localhost:#{port}"
+server = require "../fixtures/server"
 
 describe "qreq", ->
 
-  describe "put", ->
+  describe "put request", ->
 
-    success = { url: "#{host}/test", json: { message: "Sending PUT..." }}
-    expectedResponse = { message: "PUT complete.", req: success.json }
+    describe "without errors", ->
 
-    beforeEach -> server.start(port)
-    afterEach -> server.stop()
+      validConfig = { url: "#{host}/json", json: { exampleParam: "exampleValue" } }
+      expectedRes = { statusCode: 200, body: { message: "PUT complete.", req: validConfig.json }}
 
-    describe "(url, data)", ->
+      before -> server.start(port)
+      after -> server.stop()
 
-      describe "success", ->
+      describe "#put(url)", ->
 
-        it "triggers #then(res)", (done) ->
-          qreq
-          .put success.url, success.json
-          .then (res) ->
-            expect(res.body).to.not.equal null
-            expect(JSON.stringify(expectedResponse)).to.equal JSON.stringify(res.body)
+        it "triggers .then(res) function", (done) ->
+
+          qreq.put(validConfig.url).then (res) ->
+            expect(res.statusCode).to.equal expectedRes.statusCode
+            expect(res.body.message).to.equal expectedRes.body.message
+            expect(res.body.req).to.deep.equal {}
             done()
 
-      describe "error", ->
+      describe "#put(config)", ->
 
-        it "triggers #fail(err)", (done) ->
-          qreq
-          .put ""
-          .fail (err) ->
-            expect(err).to.not.equal null
+        it "triggers .then(res) function", (done) ->
+
+          qreq.put(validConfig).then (res) ->
+            expect(res.statusCode).to.equal expectedRes.statusCode
+            expect(res.body).to.deep.equal expectedRes.body
             done()
 
-    describe "(config)", ->
+      describe "#put(url, callback)", ->
 
-      describe "success", ->
-
-        it "triggers #then(res)", (done) ->
-          qreq
-          .put success
-          .then (res) ->
-            expect(res.body).to.not.equal null
-            expect(JSON.stringify(expectedResponse)).to.equal JSON.stringify(res.body)
+        it "triggers callback function with signature (null, res)", (done) ->
+          qreq.put validConfig.url, (err, res) ->
+            expect(err).to.not.exist
+            expect(res.statusCode).to.equal expectedRes.statusCode
+            expect(res.body.message).to.equal expectedRes.body.message
+            expect(res.body.req).to.deep.equal {}
             done()
 
-        it "ignores config.method = 'GET'", (done) ->
-          success.method = "GET"
-          qreq
-          .put success
-          .then (res) ->
-            expect(res.body.message).to.not.contain "GET"
+      describe "#put(config, callback)", ->
+
+        it "triggers callback function with signature (null, res)", (done) ->
+          qreq.put validConfig, (err, res) ->        
+            expect(err).to.not.exist
+            expect(res.statusCode).to.deep.equal expectedRes.statusCode
+            expect(res.body).to.deep.equal expectedRes.body
             done()
 
-      describe "error", ->
+    describe "with errors", ->
 
-        it "triggers #fail(err)", (done) ->
-          qreq
-          .put {}
-          .fail (err) ->
-            expect(err).to.not.equal null
+      invalidConfig = { url: "" }
+
+      describe "#put(url)", ->
+
+        it "triggers .fail(err) function", (done) ->
+
+          qreq.put(invalidConfig.url).fail (err) ->
+            expect(err).to.exist
             done()
 
+      describe "#put(config)", ->
 
-    describe "without any arguments", ->
+        it "triggers .fail(res) function", (done) ->
 
-      it "throws an error", ->
-        expect(-> qreq.put()).to.throw Error
+          qreq.put(invalidConfig).fail (err) ->
+            expect(err).to.exist
+            done()
+
+      describe "#put(url, callback)", ->
+
+        it "triggers callback function with signature (err, null)", (done) ->
+          qreq.put invalidConfig.url, (err, res) ->
+            expect(err).to.exist
+            expect(res).to.not.exist
+            done()
+
+      describe "#put(config, callback)", ->
+
+        it "triggers callback function with signature (err, null)", (done) ->
+          qreq.put invalidConfig, (err, res) ->        
+            expect(err).to.exist
+            expect(res).to.not.exist
+            done()

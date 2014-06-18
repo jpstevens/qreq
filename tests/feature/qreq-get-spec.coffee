@@ -1,63 +1,91 @@
-expect   = require("chai").expect
+expect = require("chai").expect
 qreq = require "../../src/qreq"
-server   = require "../fixtures/server"
+# test server config
 port = 9090
 host = "http://localhost:#{port}"
+server = require "../fixtures/server"
 
 describe "qreq", ->
 
-  describe "get", ->
+  describe "get request", ->
 
-    success = { url: "#{host}/test" }
-    expectedResponse = JSON.stringify { message: "GET complete." }
+    describe "without errors", ->
 
-    beforeEach -> server.start(port)
-    afterEach -> server.stop()
+      expectedRes = { statusCode: 200, body: { message: "GET complete." }}
+      validConfig = { url: "#{host}/json", json: true }
 
-    describe "(url)", ->
+      before -> server.start(port)
+      after -> server.stop()
 
-      describe "success", ->
+      describe "#get(url)", ->
 
-        it "triggers #then(res)", (done) ->
-          qreq
-          .get success.url
-          .then (res) ->
-            expect(res.body).to.not.equal null
-            expect(res.body).to.equal expectedResponse
+        it "triggers .then(res) function", (done) ->
+
+          qreq.get(validConfig.url).then (res) ->
+            expect(res.statusCode).to.equal expectedRes.statusCode
+            expect(res.body).to.deep.equal expectedRes.body
             done()
 
-      describe "error", ->
+      describe "#get(config)", ->
 
-        it "triggers #fail(err)", (done) ->
-          qreq
-          .get ""
-          .fail (err) ->
-            expect(err).to.not.equal null
+        it "triggers .then(res) function", (done) ->
+
+          qreq.get(validConfig).then (res) ->
+            expect(res.statusCode).to.equal expectedRes.statusCode
+            expect(res.body).to.deep.equal expectedRes.body
             done()
 
-    describe "(config)", ->
+      describe "#get(url, callback)", ->
 
-      describe "success", ->
-
-        it "triggers #then(res)", (done) ->
-          qreq
-          .get success
-          .then (res) ->
-            expect(res.body).to.equal expectedResponse
-            expect(res.body).to.not.equal null
+        it "triggers callback function with signature (null, res)", (done) ->
+          qreq.get validConfig.url, (err, res) ->
+            expect(err).to.not.exist
+            expect(res.statusCode).to.equal expectedRes.statusCode
+            expect(res.body).to.deep.equal expectedRes.body
             done()
 
-      describe "error", ->
+      describe "#get(config, callback)", ->
 
-        it "triggers #fail(err)", (done) ->
-          qreq
-          .get {}
-          .fail (err) ->
-            expect(err).to.not.equal null
+        it "triggers callback function with signature (null, res)", (done) ->
+          qreq.get validConfig, (err, res) ->        
+            expect(err).to.not.exist
+            expect(res.statusCode).to.deep.equal expectedRes.statusCode
+            expect(res.body).to.deep.equal expectedRes.body
             done()
 
 
-    describe "without any arguments", ->
+    describe "with errors", ->
 
-      it "throws an error", ->
-        expect(-> qreq.get()).to.throw Error
+      invalidConfig = { url: "" }
+
+      describe "#get(url)", ->
+
+        it "triggers .fail(err) function", (done) ->
+
+          qreq.get(invalidConfig.url).fail (err) ->
+            expect(err).to.exist
+            done()
+
+      describe "#get(config)", ->
+
+        it "triggers .fail(res) function", (done) ->
+
+          qreq.get(invalidConfig).fail (err) ->
+            expect(err).to.exist
+            done()
+
+      describe "#get(url, callback)", ->
+
+        it "triggers callback function with signature (err, null)", (done) ->
+          qreq.get invalidConfig.url, (err, res) ->
+            expect(err).to.exist
+            expect(res).to.not.exist
+            done()
+
+      describe "#get(config, callback)", ->
+
+        it "triggers callback function with signature (err, null)", (done) ->
+          qreq.get invalidConfig, (err, res) ->        
+            expect(err).to.exist
+            expect(res).to.not.exist
+            done()

@@ -29,6 +29,14 @@ module.exports = function(grunt) {
           colors: true
         },
         src: ['tests/feature/*-spec.coffee']
+      },
+      unit: {
+        options: {
+          reporter: 'list',
+          require: 'coffee-script/register',
+          colors: true
+        },
+        src: ['tests/unit/*-spec.coffee']
       }
     }
   });
@@ -39,6 +47,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-mocha-test');
 
   grunt.registerTask('build', ['coffeelint', 'clean', 'coffee']);
-  grunt.registerTask('test', ['mochaTest']);
+  grunt.registerTask('test:feature', ['mochaTest:feature']);
+  grunt.registerTask('test:unit', ['mochaTest:unit']);
   grunt.registerTask('default', ['test', 'build']);
 };

@@ -5,8 +5,7 @@
   "main": "dist/qreq.js",
   "dependencies": {
     "q": "~1.0.1",
-    "request": "~2.34.0",
-    "http-status": "^0.1.7"
+    "request": "~2.34.0"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
