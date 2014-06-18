@@ -47,7 +47,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-mocha-test');
 
   grunt.registerTask('build', ['coffeelint', 'clean', 'coffee']);
+
   grunt.registerTask('test:feature', ['mochaTest:feature']);
   grunt.registerTask('test:unit', ['mochaTest:unit']);
+  grunt.registerTask('test', ['test:unit', 'test:feature']);
+
   grunt.registerTask('default', ['test', 'build']);
 };
