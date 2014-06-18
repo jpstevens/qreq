@@ -46,7 +46,7 @@ qreq.get("http://google.com", function(err, res){
     //...
   }
 });
-
+```
 
 ## Change log:
 
