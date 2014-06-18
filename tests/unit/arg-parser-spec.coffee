@@ -10,14 +10,14 @@ describe "ArgParser", ->
       it "returns a valid options object", ->
         args = ["http://example.dev", ((err, res) -> null)]
         opts = argParser.getOpts(args)
-        expect(opts.config).to.deep.equal { url: args[0] }
+        expect(opts.config).to.deep.equal { url: args[0], json: true }
         expect(opts.callback).to.deep.equal args[1]
         
     describe "[url]", ->
       
       it "returns a valid options object", ->
         args = ["http://example.dev"]
-        expect(argParser.getOpts(args).config).to.deep.equal { url: "http://example.dev" }
+        expect(argParser.getOpts(args).config).to.deep.equal { url: "http://example.dev", json: true }
         expect(argParser.getOpts(args).callback).to.not.exist
 
     describe "[config, callback]", ->

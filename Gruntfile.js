@@ -24,7 +24,7 @@ module.exports = function(grunt) {
     mochaTest: {
       feature: {
         options: {
-          reporter: 'list',
+          reporter: 'spec',
           require: 'coffee-script/register',
           colors: true
         },
@@ -32,7 +32,7 @@ module.exports = function(grunt) {
       },
       unit: {
         options: {
-          reporter: 'list',
+          reporter: 'spec',
           require: 'coffee-script/register',
           colors: true
         },

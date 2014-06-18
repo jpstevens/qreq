@@ -37,7 +37,6 @@ exports.start = (port) ->
 
   app.all '*', (req, res) -> res.json 404, { message: "Page not found" }
 
-  server = app.listen port, ->
-    console.log "> server started on port #{port}"
+  server = app.listen port
 
 exports.stop = -> server.close()
