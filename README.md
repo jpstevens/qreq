@@ -19,7 +19,7 @@ In your project, require the package:
 var qreq = require("qreq");
 ```
 
-To make a get request:
+To make a GET request, using the promise syntax:
 
 ```javascript
 qreq
@@ -33,3 +33,21 @@ qreq
     //...
   });
 ```
+
+To make a GET request, using the callback syntax:
+
+```javascript
+qreq.get("http://google.com", function(err, res){
+  if(err){
+    console.log(err);
+    //...
+  } else {
+    conslole.log(res.body);
+    //...
+  }
+});
+
+
+## Change log:
+
+0.2.0 - Adds callback functionality

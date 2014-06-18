@@ -1,6 +1,6 @@
 {
   "name": "qreq",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "A q-style promise wrapper for HTTP requests",
   "main": "dist/qreq.js",
   "dependencies": {
