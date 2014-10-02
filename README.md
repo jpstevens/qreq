@@ -1,5 +1,5 @@
 # qreq
-[![Build Status](https://secure.travis-ci.org/jpstevens/qreq.png?branch=master)](https://travis-ci.org/jpstevens/qreq)
+[![Build Status](https://secure.travis-ci.org/jpstevens/qreq.png?branch=master)](https://travis-ci.org/jpstevens/qreq) ![Downloads/month](http://img.shields.io/npm/dm/qreq.svg)
 
 A q-style promise wrapper for HTTP requests
 
